@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: This stack will be used to deploy API projects
+
+Parameters:
+  ecsClusterName:
+    Type: String
+    Description: ECS cluster name for apis
+
+  ecsTaskDefinitionName:
+    Type: String
+    Description: Name of the ECS task definition
+
+  ecsServiceName:
+    Type: String
+    Description: Name of the ECS service
+
+  containerName:
+    Type: String
+    Description: Name of the container, same as defined in task-definition. Note it should match exactly
+
+  containerPort:
+    Type: Number
+    Description: Port on which container listen, same as defined in task-definition. Note it should match exactly
+
+  existingTargetGroupArn:
+    Type: String
+    Description: ARN of the existing target group
+
+Resources:
+  SmECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref ecsClusterName
+      ServiceName: !Ref ecsServiceName
+      TaskDefinition: !Ref ecsTaskDefinitionName
+      DesiredCount: 1
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
+      PlacementStrategies:
+      - Type: spread
+        Field: "attribute:ecs.availability-zone"
+      - Type: spread
+        Field: "instanceId"
+      LoadBalancers:
+      - TargetGroupArn: !Ref existingTargetGroupArn
+        ContainerName: !Ref containerName
+        ContainerPort: !Ref containerPort

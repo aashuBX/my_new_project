@@ -1,0 +1,19 @@
+- ParameterKey: "ecsClusterName"
+  ParameterValue: "api-cluster-ecs" # Do not change this <--- it is fixed for api projects
+
+# These below parameters vary based on api projects, so update them accordingly
+
+- ParameterKey: "existingTargetGroupArn"
+  ParameterValue: "arn:aws:elasticloadbalancing:us-east-1:134746102940:targetgroup/sm-tg-conversive-button-manag/1e445b49b02f768d" # Add existing target group arn
+
+- ParameterKey: "containerName"
+  ParameterValue: "conversive_button_management_container" # Refer same name defined in task-definition.json
+
+- ParameterKey: "containerPort"
+  ParameterValue: "5010" # this will be evaluated as string not number so use double quotes
+
+- ParameterKey: "ecsTaskDefinitionName"
+  ParameterValue: "conversive_button_management_td" # Add name of your task-definition - Refer same name defined in task-definition.json
+
+- ParameterKey: "ecsServiceName"
+  ParameterValue: "conversive_button_management_svc" # Add api service name

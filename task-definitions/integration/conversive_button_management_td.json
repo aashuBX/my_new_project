@@ -1,0 +1,134 @@
+{
+    "family": "conversive_button_management_td",
+    "containerDefinitions": [
+      {
+        "name": "conversive_button_management_container",
+        "image": "134746102940.dkr.ecr.us-east-1.amazonaws.com/api/conversive-button-management:latest",
+        "cpu": 400,
+        "memory": 200,
+        "memoryReservation": 85,
+        "portMappings": [
+          {
+            "name": "conversive_button_management_5010_tcp",
+            "containerPort": 5010,
+            "hostPort": 0,
+            "protocol": "tcp",
+            "appProtocol": "http"
+          }
+        ],
+        "essential": true,
+        "environment": [],
+        "mountPoints": [
+          {
+            "sourceVolume": "conversive_button_management_json_logs_vol",
+            "containerPath": "/extra-01/logs/conversive_button_management/",
+            "readOnly": false
+          },
+          {
+            "sourceVolume": "conversive_button_management_applications_logs_vol",
+            "containerPath": "/application/logs/conversive_button_management/",
+            "readOnly": false
+          }
+        ],
+        "volumesFrom": [],
+        "secrets": [
+          {
+            "name": "SQLALCHEMY_DATABASE_URI",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/SQLALCHEMY_DATABASE_URI"
+          },
+          {
+            "name": "SQLALCHEMY_TRACK_MODIFICATIONS",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/SQLALCHEMY_TRACK_MODIFICATIONS"
+          },
+          {
+            "name": "JSON_LOG_PATH",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/JSON_LOG_PATH"
+          },
+          {
+            "name": "BETTER_STACK_TOKEN",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/BETTER_STACK_TOKEN"
+          },
+          {
+            "name": "BUCKET",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/BUCKET"
+          },
+          {
+            "name": "REDIS_HOST",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/REDIS_HOST"
+          },
+          {
+            "name": "REDIS_PORT",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/REDIS_PORT"
+          },
+          {
+            "name": "DOMAIN",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/DOMAIN"
+          },
+          {
+            "name": "SIGNATURE_EXPIRY",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/SIGNATURE_EXPIRY"
+          },
+          {
+            "name": "BASE_URL",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/BASE_URL"
+          },
+          {
+            "name": "DAS_AUTH_URL",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/DAS_AUTH_URL"
+          },
+          {
+            "name": "SMS_MAGIC_API_BASE_URL",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/SMS_MAGIC_API_BASE_URL"
+          },
+          {
+            "name": "SMS_MAGIC_APP_BASE_URL",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/SMS_MAGIC_APP_BASE_URL"
+          },
+          {
+            "name": "QR_CODE_URL_BASE_URL",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/QR_CODE_URL_BASE_URL"
+          },
+          {
+            "name": "WEB_SOCKET_URL",
+            "valueFrom": "/SMSMAGICPORTAL/API/CONVERSIVE_BUTTON_MANAGEMENT/WEB_SOCKET_URL"
+          },
+          {
+            "name": "AWS_ACCESS_KEY_ID",
+            "valueFrom": "/SMSMAGICPORTAL/AWS/CREDENTIALS/AWS_ACCESS_KEY_ID"
+          },
+          {
+            "name": "AWS_SECRET_ACCESS_KEY",
+            "valueFrom": "/SMSMAGICPORTAL/AWS/CREDENTIALS/AWS_SECRET_ACCESS_KEY"
+          },
+          {
+            "name": "AWS_REGION_NAME",
+            "valueFrom": "/SMSMAGICPORTAL/AWS/CREDENTIALS/AWS_REGION_NAME"
+          }
+        ]
+      }
+    ],
+    "taskRoleArn": "arn:aws:iam::134746102940:role/sm-ecs-taskrole",
+    "executionRoleArn": "arn:aws:iam::134746102940:role/sm-ecs-taskrole",
+    "networkMode": "bridge",
+    "volumes": [
+      {
+        "name": "conversive_button_management_json_logs_vol",
+        "host": {
+          "sourcePath": "/api/intg/efs/json_logs/conversive_button_management/"
+        }
+      },
+      {
+        "name": "conversive_button_management_applications_logs_vol",
+        "host": {
+          "sourcePath": "/api/intg/efs/application_logs/conversive_button_management/"
+        }
+      }
+    ],
+    "requiresCompatibilities": ["EC2"],
+    "cpu": "400",
+    "memory": "200",
+    "runtimePlatform": {
+      "cpuArchitecture": "X86_64",
+      "operatingSystemFamily": "LINUX"
+    }
+  }
