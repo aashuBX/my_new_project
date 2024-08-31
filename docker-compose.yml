@@ -1,38 +1,31 @@
-# version: "3.9"
-# services:
-#   api:
-#     image: conversive-button-runtime
-#     container_name: conversive-button-runtime-container
-#     env_file:
-#       - envs/docker-dev.env
-#     environment:
-#       - ENVIRONMENT_NAME=docker-dev
-#     build:
-#       context: .
-#       args:
-#         GIT_USER_NAME: $GIT_USER_NAME # export GIT_USER_NAME=your_git_username in your pc's shell to build locally using docker-compose.yml
-#         GIT_AUTH_TOKEN: $GIT_AUTH_TOKEN #export GIT_AUTH_TOKEN=your_git_token in your pc's shell to build locally using docker-compose.yml
-#     depends_on:
-#       - redis
-#       - db
-#     ports:
-#       - 5008:5008 # port based on your project
-#       # set the creds below in your docker-dev.env file
-
-#   db:
-#     image: mysql:latest 
-#     environment:
-#       MYSQL_ROOT_PASSWORD: root
-#       MYSQL_DATABASE: conversive_button
-#       MYSQL_USER: root123
-#       MYSQL_PASSWORD: root123
-
-#   redis:
-#     image: redis
-
+version: "3.9"
 services:
   api:
-    build: .
-    container_name: my_project_container
+    image: conversive-button-management
+    container_name: conversive-button-management-container
+    env_file:
+      - envs/docker-dev.env
+    environment:
+      - ENVIRONMENT_NAME=docker-dev
+    build:
+      context: .
+      args:
+        GIT_USER_NAME: $GIT_USER_NAME # export GIT_USER_NAME=your_git_username in your pc's shell to build locally using docker-compose.yml
+        GIT_AUTH_TOKEN: $GIT_AUTH_TOKEN #export GIT_AUTH_TOKEN=your_git_token in your pc's shell to build locally using docker-compose.yml
+    depends_on:
+      - redis
+      - db
     ports:
-      - 5008:5008
+      - 5010:5010 # port based on your project
+      # set the creds below in your docker-dev.env file
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: conversive_button
+      MYSQL_USER: root123
+      MYSQL_PASSWORD: root123
+
+  redis:
+    image: redis
